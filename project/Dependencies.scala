@@ -6,6 +6,7 @@ object Dependencies {
     val Config = "1.0.6"
     val Http   = "1.0.0.0-RC17"
     val Json   = "0.1.5"
+    val Test   = "1.0.12"
   }
 
   private object Versions {
@@ -19,5 +20,8 @@ object Dependencies {
   val zioJson: ModuleID           = "dev.zio" %% "zio-json"            % Zio.Json
 
   val jodaTime: ModuleID = "joda-time" % "joda-time" % Versions.JodaTime
+
+  val zioTest    = "dev.zio" %% "zio-test"     % Zio.Test
+  val zioTestSbt = "dev.zio" %% "zio-test-sbt" % Zio.Test
 
 }

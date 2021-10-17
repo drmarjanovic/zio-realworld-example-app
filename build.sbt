@@ -15,6 +15,9 @@ lazy val info = List(
   version := "0.0.1"
 )
 
+Global / onChangedBuildSource := ReloadOnSourceChanges
+Global / testFrameworks := List(new TestFramework("zio.test.sbt.ZTestFramework"))
+
 lazy val root = (project in file("."))
   .settings(info: _*)
   .settings {
@@ -23,6 +26,8 @@ lazy val root = (project in file("."))
       val zio   = List(zioConfig, zioConfigMagnolia, zioConfigTypesafe, zioHttp, zioJson)
       val utils = List(jodaTime)
 
-      zio ++ utils
+      val tests = List(zioTest, zioTestSbt).map(_ % Test)
+
+      zio ++ utils ++ tests
     }
   }
