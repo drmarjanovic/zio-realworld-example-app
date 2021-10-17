@@ -18,6 +18,9 @@ lazy val info = List(
 Global / onChangedBuildSource := ReloadOnSourceChanges
 Global / testFrameworks := List(new TestFramework("zio.test.sbt.ZTestFramework"))
 
+addCommandAlias("fmt", "all scalafmtSbt scalafmtAll")
+addCommandAlias("fmtCheck", "all scalafmtSbtCheck scalafmtCheckAll")
+
 lazy val root = (project in file("."))
   .settings(info: _*)
   .settings {

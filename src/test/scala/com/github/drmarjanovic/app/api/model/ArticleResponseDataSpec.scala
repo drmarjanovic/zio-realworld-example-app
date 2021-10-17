@@ -27,9 +27,9 @@ object ArticleResponseDataSpec extends DefaultRunnableSpec {
         slug = "test-slug",
         body = "test-body",
         description = "test-description",
-          tags = Nil,
-          createdAt = now,
-          updatedAt = now
+        tags = Nil,
+        createdAt = now,
+        updatedAt = now
       )
 
       assert(result)(equalTo(expected))
