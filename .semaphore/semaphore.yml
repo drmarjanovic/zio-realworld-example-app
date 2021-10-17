@@ -9,9 +9,21 @@ agent:
 blocks:
   - name: Lint
     task:
+      prologue:
+        commands:
+          - checkout
+          - sem-version scala 2.12.10
       jobs:
         - name: Lint
           commands:
-            - sem-version scala 2.12.10
-            - checkout
             - sbt fmtCheck
+  - name: Test
+    task:
+      prologue:
+        commands:
+          - checkout
+          - sem-version scala 2.12.10
+      jobs:
+        - name: Test
+          commands:
+            - sbt test
