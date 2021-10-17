@@ -9,7 +9,7 @@ object Articles {
 
   val routes: Http[Any, Nothing, Request, UResponse] =
     Http.collect[Request] {
-      case _ @ Method.GET -> Root / "articles" =>
+      case _ @Method.GET -> Root / "articles" =>
         val response = ArticlesResponse.fromDomain(MockData.articles)
         Response.jsonString(response.toJson)
 
