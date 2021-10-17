@@ -20,7 +20,7 @@ lazy val root = (project in file("."))
   .settings {
     scalaVersion := "2.13.6"
     libraryDependencies ++= {
-      val zio   = List(zioHttp, zioJson)
+      val zio   = List(zioConfig, zioConfigMagnolia, zioConfigTypesafe, zioHttp, zioJson)
       val utils = List(jodaTime)
 
       zio ++ utils
