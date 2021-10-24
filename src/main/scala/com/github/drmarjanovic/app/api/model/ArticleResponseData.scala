@@ -1,7 +1,7 @@
 package com.github.drmarjanovic.app.api.model
 
 import com.github.drmarjanovic.app.domain.Article
-import org.joda.time.DateTime
+import java.time.LocalDateTime
 import zio.json._
 
 final case class ArticleResponseData(
@@ -11,8 +11,8 @@ final case class ArticleResponseData(
   description: String,
   @jsonField("tagList")
   tags: List[String],
-  createdAt: DateTime,
-  updatedAt: DateTime
+  createdAt: LocalDateTime,
+  updatedAt: LocalDateTime
 )
 
 object ArticleResponseData {

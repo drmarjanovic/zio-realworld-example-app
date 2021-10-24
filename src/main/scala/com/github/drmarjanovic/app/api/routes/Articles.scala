@@ -20,4 +20,8 @@ object Articles {
         }
     }
 
+  private val FilterAuthor    = "author"
+  private val FilterFavorited = "favorited"
+  private val FilterTag       = "tag"
+
 }

@@ -1,6 +1,6 @@
 package com.github.drmarjanovic.app.domain
 
-import org.joda.time.DateTime
+import java.time.LocalDateTime
 
 final case class Article(
   id: ArticleId,
@@ -8,6 +8,6 @@ final case class Article(
   title: String,
   description: String,
   body: String,
-  createdAt: DateTime,
-  updatedAt: DateTime
+  createdAt: LocalDateTime,
+  updatedAt: LocalDateTime
 )

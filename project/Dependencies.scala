@@ -9,17 +9,11 @@ object Dependencies {
     val Test   = "1.0.12"
   }
 
-  private object Versions {
-    val JodaTime = "2.10.12"
-  }
-
   val zioConfig: ModuleID         = "dev.zio" %% "zio-config"          % Zio.Config
   val zioConfigMagnolia: ModuleID = "dev.zio" %% "zio-config-magnolia" % Zio.Config
   val zioConfigTypesafe: ModuleID = "dev.zio" %% "zio-config-typesafe" % Zio.Config
   val zioHttp: ModuleID           = "io.d11"  %% "zhttp"               % Zio.Http
   val zioJson: ModuleID           = "dev.zio" %% "zio-json"            % Zio.Json
-
-  val jodaTime: ModuleID = "joda-time" % "joda-time" % Versions.JodaTime
 
   val zioTest    = "dev.zio" %% "zio-test"     % Zio.Test
   val zioTestSbt = "dev.zio" %% "zio-test-sbt" % Zio.Test
