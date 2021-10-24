@@ -1,7 +1,7 @@
 package com.github.drmarjanovic.app.api.routes
 
 import com.github.drmarjanovic.app.MockData
-import com.github.drmarjanovic.app.api.model.{ ArticleResponse, ArticlesResponse }
+import com.github.drmarjanovic.app.api.model.{ArticleResponse, ArticlesResponse}
 import zio.json._
 import zhttp.http._
 

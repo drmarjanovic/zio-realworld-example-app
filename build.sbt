@@ -4,8 +4,8 @@ Global / onChangedBuildSource := ReloadOnSourceChanges
 
 inThisBuild(
   List(
-    name := "zio-realworld-example-app",
-    description := "Exemplary real world application built with Scala + ZIO.",
+    name         := "zio-realworld-example-app",
+    description  := "Exemplary real world application built with Scala + ZIO.",
     organization := "com.github.drmarjanovic",
     scalaVersion := "2.13.6",
     developers := List(
