@@ -36,7 +36,7 @@ addCommandAlias("fmtCheck", "all scalafmtSbtCheck scalafmtCheckAll")
 lazy val root = (project in file(".")).settings(
   testFrameworks := List(new TestFramework("zio.test.sbt.ZTestFramework")),
   libraryDependencies ++= {
-    val zio = List(zioConfig, zioConfigMagnolia, zioConfigTypesafe, zioHttp, zioJson)
+    val zio = List(zioConfig, zioConfigMagnolia, zioConfigTypesafe, zioHttp, zioJson, zioMagic)
 
     val tests = List(zioTest, zioTestSbt).map(_ % Test)
 
