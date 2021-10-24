@@ -27,6 +27,7 @@ object ArticleResponseData {
       description = article.description,
       tags = Set.empty,
       createdAt = article.createdAt,
-      updatedAt = article.updatedAt
+      updatedAt = article.updatedAt,
+      author = ProfileResponse(ProfileResponseData("test", "bio", "image", false))
     )
 }
