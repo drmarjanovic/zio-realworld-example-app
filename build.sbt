@@ -33,13 +33,21 @@ addCommandAlias("fixCheck", "scalafixAll --check")
 addCommandAlias("fmt", "all scalafmtSbt scalafmtAll")
 addCommandAlias("fmtCheck", "all scalafmtSbtCheck scalafmtCheckAll")
 
-lazy val root = (project in file(".")).settings(
-  testFrameworks := List(new TestFramework("zio.test.sbt.ZTestFramework")),
-  libraryDependencies ++= {
-    val zio = List(zioConfig, zioConfigMagnolia, zioConfigTypesafe, zioHttp, zioJson, zioMagic)
-
-    val tests = List(zioTest, zioTestSbt).map(_ % Test)
-
-    zio ++ tests
-  }
+lazy val buildInfoSettings = List(
+  buildInfoKeys    := List[BuildInfoKey](name, description, version),
+  buildInfoPackage := "com.github.drmarjanovic.app"
 )
+
+lazy val root = (project in file("."))
+  .enablePlugins(BuildInfoPlugin)
+  .settings(buildInfoSettings: _*)
+  .settings(
+    testFrameworks := List(new TestFramework("zio.test.sbt.ZTestFramework")),
+    libraryDependencies ++= {
+      val zio = List(zioConfig, zioConfigMagnolia, zioConfigTypesafe, zioHttp, zioJson, zioMagic)
+
+      val tests = List(zioTest, zioTestSbt).map(_ % Test)
+
+      zio ++ tests
+    }
+  )
