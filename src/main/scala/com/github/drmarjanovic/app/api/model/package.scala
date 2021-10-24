@@ -1,7 +1,7 @@
 package com.github.drmarjanovic.app.api
 
-import zio.json.internal.Write
 import zio.json.JsonEncoder
+import zio.json.internal.Write
 
 import java.time.LocalDateTime
 

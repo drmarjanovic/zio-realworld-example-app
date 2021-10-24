@@ -1,11 +1,12 @@
 package com.github.drmarjanovic.app
 
 import com.github.drmarjanovic.app.domain.{Article, ArticleId}
+
 import java.time.LocalDateTime
 
 object MockData {
 
-  val articles = List(
+  val articles: List[Article] = List(
     Article(
       id = ArticleId(1),
       slug = "article1",

@@ -1,8 +1,9 @@
 package com.github.drmarjanovic.app.api.model
 
 import com.github.drmarjanovic.app.domain.Article
-import java.time.LocalDateTime
 import zio.json._
+
+import java.time.LocalDateTime
 
 final case class ArticleResponseData(
   title: String,

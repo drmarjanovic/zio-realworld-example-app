@@ -1,14 +1,13 @@
 package com.github.drmarjanovic.app.api.model
 
 import com.github.drmarjanovic.app.domain.{Article, ArticleId}
-import zio.test._
 import zio.test.Assertion._
-import zio.test.DefaultRunnableSpec
+import zio.test._
 
 import java.time.LocalDateTime
 
 object ArticleResponseDataSpec extends DefaultRunnableSpec {
-  def spec = suite("ArticleResponseDataSpec")(
+  def spec: ZSpec[Environment, Failure] = suite("ArticleResponseDataSpec")(
     test("fromDomain correctly transforms domain to response data") {
       val now = LocalDateTime.now
       val article = Article(

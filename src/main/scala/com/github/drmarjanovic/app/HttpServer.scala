@@ -2,10 +2,10 @@ package com.github.drmarjanovic.app
 
 import com.github.drmarjanovic.app.api.routes.Articles
 import com.github.drmarjanovic.app.config.AppConfig
-import zio.config.magnolia.DeriveConfigDescriptor.descriptor
-import zio.config.getConfig
-import zio._
 import zhttp.service.Server
+import zio._
+import zio.config.getConfig
+import zio.config.magnolia.DeriveConfigDescriptor.descriptor
 import zio.config.typesafe.TypesafeConfig
 
 object HttpServer extends App {

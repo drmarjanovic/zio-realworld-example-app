@@ -2,8 +2,8 @@ package com.github.drmarjanovic.app.api.routes
 
 import com.github.drmarjanovic.app.MockData
 import com.github.drmarjanovic.app.api.model.{ArticleResponse, ArticlesResponse}
-import zio.json._
 import zhttp.http._
+import zio.json._
 
 object Articles {
 
@@ -19,9 +19,5 @@ object Articles {
           case None          => Response.status(Status.NOT_FOUND)
         }
     }
-
-  private val FilterAuthor    = "author"
-  private val FilterFavorited = "favorited"
-  private val FilterTag       = "tag"
 
 }
