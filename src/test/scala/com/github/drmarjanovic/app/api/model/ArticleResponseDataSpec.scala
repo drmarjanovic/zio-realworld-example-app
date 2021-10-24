@@ -27,7 +27,7 @@ object ArticleResponseDataSpec extends DefaultRunnableSpec {
         slug = "test-slug",
         body = "test-body",
         description = "test-description",
-        tags = Nil,
+        tags = Set.empty,
         createdAt = now,
         updatedAt = now
       )

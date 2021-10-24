@@ -11,7 +11,7 @@ final case class ArticleResponseData(
   body: String,
   description: String,
   @jsonField("tagList")
-  tags: List[String],
+  tags: Set[String],
   createdAt: LocalDateTime,
   updatedAt: LocalDateTime
 )
@@ -25,7 +25,7 @@ object ArticleResponseData {
       slug = article.slug,
       body = article.body,
       description = article.description,
-      tags = Nil,
+      tags = Set.empty,
       createdAt = article.createdAt,
       updatedAt = article.updatedAt
     )
