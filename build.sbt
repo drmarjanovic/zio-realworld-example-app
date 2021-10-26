@@ -13,6 +13,12 @@ inThisBuild(
         "Dragutin Marjanovic",
         "dmarjanovic94@gmail.com",
         url("https://github.com/drmarjanovic")
+      ),
+      Developer(
+        "mijicd",
+        "Dejan Mijic",
+        "dmijic@acm.org",
+        url("https://github.com/mijicd")
       )
     ),
     scalaVersion      := "2.13.6",
