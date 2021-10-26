@@ -42,12 +42,6 @@ lazy val root = (project in file("."))
   .enablePlugins(BuildInfoPlugin)
   .settings(buildInfoSettings: _*)
   .settings(
-    testFrameworks := List(new TestFramework("zio.test.sbt.ZTestFramework")),
-    libraryDependencies ++= {
-      val zio = List(zioConfig, zioConfigMagnolia, zioConfigTypesafe, zioHttp, zioJson, zioMagic)
-
-      val tests = List(zioTest, zioTestSbt).map(_ % Test)
-
-      zio ++ tests
-    }
+    testFrameworks      := List(new TestFramework("zio.test.sbt.ZTestFramework")),
+    libraryDependencies := All
   )

@@ -15,15 +15,17 @@ object Dependencies {
     val Scaluzzi        = "0.1.20"
   }
 
-  val zioConfig: ModuleID         = "dev.zio"              %% "zio-config"          % Zio.Config
-  val zioConfigMagnolia: ModuleID = "dev.zio"              %% "zio-config-magnolia" % Zio.Config
-  val zioConfigTypesafe: ModuleID = "dev.zio"              %% "zio-config-typesafe" % Zio.Config
-  val zioHttp: ModuleID           = "io.d11"               %% "zhttp"               % Zio.Http
-  val zioJson: ModuleID           = "dev.zio"              %% "zio-json"            % Zio.Json
-  val zioMagic: ModuleID          = "io.github.kitlangton" %% "zio-magic"           % Zio.Magic
-
-  val zioTest    = "dev.zio" %% "zio-test"     % Zio.Test
-  val zioTestSbt = "dev.zio" %% "zio-test-sbt" % Zio.Test
+  lazy val All =
+    List(
+      "dev.zio"              %% "zio-config"          % Zio.Config,
+      "dev.zio"              %% "zio-config-magnolia" % Zio.Config,
+      "dev.zio"              %% "zio-config-typesafe" % Zio.Config,
+      "io.d11"               %% "zhttp"               % Zio.Http,
+      "dev.zio"              %% "zio-json"            % Zio.Json,
+      "io.github.kitlangton" %% "zio-magic"           % Zio.Magic,
+      "dev.zio"              %% "zio-test"            % Zio.Test % Test,
+      "dev.zio"              %% "zio-test-sbt"        % Zio.Test % Test
+    )
 
   lazy val ScalaFix =
     List(
