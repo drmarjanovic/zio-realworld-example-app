@@ -34,6 +34,7 @@ inThisBuild(
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
 addCommandAlias("prepare", "fix; fmt")
+addCommandAlias("check", "fixCheck; fmtCheck")
 addCommandAlias("fix", "scalafixAll")
 addCommandAlias("fixCheck", "scalafixAll --check")
 addCommandAlias("fmt", "all scalafmtSbt scalafmtAll")
