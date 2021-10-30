@@ -2,7 +2,7 @@ version: "3.9"
 services:
   postgresql:
     container_name: zio_realworld_example_app
-    image: postgres:14-alpine
+    image: postgres:13.4-alpine
     environment:
       POSTGRES_DB: db
       POSTGES_USER: postgres
