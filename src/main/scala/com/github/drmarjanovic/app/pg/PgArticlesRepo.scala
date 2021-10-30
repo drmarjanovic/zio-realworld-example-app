@@ -16,4 +16,7 @@ final case class PgArticlesRepo(pool: DataSource with Closeable) extends Article
   override def all(limit: Int, offset: Int): Task[List[Article]] =
     run(articles.drop(lift(offset)).take(lift(limit))).onDS.provide(env)
 
+  override def findBySlug(slug: String): Task[Option[Article]] =
+    run(articles.filter(_.slug == lift(slug))).map(_.headOption).onDS.provide(env)
+
 }

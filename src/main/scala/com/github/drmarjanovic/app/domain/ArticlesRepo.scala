@@ -8,6 +8,8 @@ import javax.sql.DataSource
 
 trait ArticlesRepo {
   def all(limit: Int, offset: Int): Task[List[Article]]
+
+  def findBySlug(slug: String): Task[Option[Article]]
 }
 
 object ArticlesRepo extends Accessible[ArticlesRepo] {
