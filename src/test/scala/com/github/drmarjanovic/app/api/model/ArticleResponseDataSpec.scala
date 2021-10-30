@@ -8,8 +8,8 @@ object ArticleResponseDataSpec extends DefaultRunnableSpec {
   def spec: ZSpec[Environment, Failure] = suite("ArticleResponseDataSpec")(
     testM("fromDomain correctly transforms domain to response data") {
       check(Gen.anyString, Gen.anyString, Gen.anyString, Gen.anyString, Gen.anyLocalDateTime, Gen.anyLocalDateTime) {
-        (slug, title, description, body, createdAt, updatedAt) =>
-          val article = Article(ArticleId(1), slug, title, description, body, createdAt, updatedAt)
+        (title, slug, body, description, createdAt, updatedAt) =>
+          val article = Article(ArticleId(1), title, slug, body, description, createdAt, updatedAt)
           val result  = ArticleResponseData.fromDomain(article)
 
           val expected = ArticleResponseData(
