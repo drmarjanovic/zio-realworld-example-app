@@ -1,8 +1,9 @@
 package com.github.drmarjanovic.app
 
 import com.github.drmarjanovic.app.api.routes.{Application, Articles}
-import com.github.drmarjanovic.app.config.AppConfig
-import com.github.drmarjanovic.app.repo.ArticlesRepo
+import com.github.drmarjanovic.app.config.{AppConfig, HttpConfig}
+import com.github.drmarjanovic.app.domain.ArticlesRepo
+import com.github.drmarjanovic.app.pg.QuillContext
 import zhttp.service.Server
 import zio._
 import zio.magic._
@@ -10,16 +11,19 @@ import zio.magic._
 object Main extends App {
 
   override def run(args: List[String]): URIO[ZEnv, ExitCode] =
-    ZIO
-      .serviceWith[AppConfig] { config =>
-        runServer(config.http.port)
-      }
+    (QuillContext.migrate *> runServer)
       .inject(AppConfig.live)
       .exitCode
 
-  private[this] def runServer(port: Int) = {
-    val routes = Application.routes +++ Articles.routes
-    Server.start(port, routes).inject(ArticlesRepo.test)
-  }
+  private[this] def runServer =
+    ZIO.serviceWith[HttpConfig] { config =>
+      val routes = Application.routes +++ Articles.routes
+      Server
+        .start(config.port, routes)
+        .inject(
+          QuillContext.live,
+          ArticlesRepo.live
+        )
+    }
 
 }
