@@ -13,7 +13,7 @@ final case class PgArticlesRepo(pool: DataSource with Closeable) extends Article
 
   private val env = Has(pool)
 
-  override def all: Task[List[Article]] =
-    run(articles.filter(_ => true)).onDS.provide(env)
+  override def all(limit: Int, offset: Int): Task[List[Article]] =
+    run(articles.drop(lift(offset)).take(lift(limit))).onDS.provide(env)
 
 }

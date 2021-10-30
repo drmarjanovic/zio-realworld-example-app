@@ -7,7 +7,7 @@ import java.io.Closeable
 import javax.sql.DataSource
 
 trait ArticlesRepo {
-  def all: Task[List[Article]]
+  def all(limit: Int, offset: Int): Task[List[Article]]
 }
 
 object ArticlesRepo extends Accessible[ArticlesRepo] {
