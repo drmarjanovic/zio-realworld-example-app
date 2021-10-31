@@ -8,6 +8,7 @@ object Dependencies {
     val Postgres        = "42.2.24"
     val Quill           = "3.10.0"
     val Scaluzzi        = "0.1.20"
+    val TestContainers  = "0.39.10"
     val ZioConfig       = "1.0.6"
     val ZioHttp         = "1.0.0.0-RC17"
     val ZioJson         = "0.1.5"
@@ -17,17 +18,18 @@ object Dependencies {
 
   lazy val All =
     List(
-      "dev.zio"              %% "zio-config"          % Versions.ZioConfig,
-      "dev.zio"              %% "zio-config-magnolia" % Versions.ZioConfig,
-      "dev.zio"              %% "zio-config-typesafe" % Versions.ZioConfig,
-      "dev.zio"              %% "zio-json"            % Versions.ZioJson,
-      "io.d11"               %% "zhttp"               % Versions.ZioHttp,
-      "io.getquill"          %% "quill-jdbc-zio"      % Versions.Quill,
-      "io.github.kitlangton" %% "zio-magic"           % Versions.ZioMagic,
-      "org.flywaydb"          % "flyway-core"         % Versions.Flyway,
-      "org.postgresql"        % "postgresql"          % Versions.Postgres,
-      "dev.zio"              %% "zio-test"            % Versions.ZioTest % Test,
-      "dev.zio"              %% "zio-test-sbt"        % Versions.ZioTest % Test
+      "dev.zio"              %% "zio-config"                        % Versions.ZioConfig,
+      "dev.zio"              %% "zio-config-magnolia"               % Versions.ZioConfig,
+      "dev.zio"              %% "zio-config-typesafe"               % Versions.ZioConfig,
+      "dev.zio"              %% "zio-json"                          % Versions.ZioJson,
+      "io.d11"               %% "zhttp"                             % Versions.ZioHttp,
+      "io.getquill"          %% "quill-jdbc-zio"                    % Versions.Quill,
+      "io.github.kitlangton" %% "zio-magic"                         % Versions.ZioMagic,
+      "org.flywaydb"          % "flyway-core"                       % Versions.Flyway,
+      "org.postgresql"        % "postgresql"                        % Versions.Postgres,
+      "dev.zio"              %% "zio-test"                          % Versions.ZioTest        % Test,
+      "dev.zio"              %% "zio-test-sbt"                      % Versions.ZioTest        % Test,
+      "com.dimafeng"          % "testcontainers-scala-postgresql_3" % Versions.TestContainers % Test
     )
 
   lazy val ScalaFix =
