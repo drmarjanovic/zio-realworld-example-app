@@ -1,4 +1,5 @@
-package com.github.drmarjanovic.app.api.model
+package com.github.drmarjanovic.app.api
+
 import zio.json._
 
 final case class ErrorResponse(errors: ErrorResponseData) extends AnyVal

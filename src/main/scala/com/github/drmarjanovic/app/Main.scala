@@ -1,8 +1,7 @@
 package com.github.drmarjanovic.app
 
-import com.github.drmarjanovic.app.api.routes.{Application, Articles}
+import com.github.drmarjanovic.app.api.{Application, Articles}
 import com.github.drmarjanovic.app.config.{AppConfig, HttpConfig}
-import com.github.drmarjanovic.app.domain.ArticlesRepo
 import com.github.drmarjanovic.app.pg.QuillContext
 import zhttp.service.Server
 import zio._

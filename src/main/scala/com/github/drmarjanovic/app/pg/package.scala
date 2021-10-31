@@ -1,6 +1,5 @@
 package com.github.drmarjanovic.app
 
-import com.github.drmarjanovic.app.domain.Article
 import io.getquill.mirrorContextWithQueryProbing.{querySchema, quote}
 import io.getquill.{Query, mirrorContextWithQueryProbing}
 

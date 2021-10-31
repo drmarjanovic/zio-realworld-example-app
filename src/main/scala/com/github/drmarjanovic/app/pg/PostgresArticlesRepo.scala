@@ -1,6 +1,6 @@
 package com.github.drmarjanovic.app.pg
 
-import com.github.drmarjanovic.app.domain.{Article, ArticlesRepo}
+import com.github.drmarjanovic.app.{Article, ArticlesRepo}
 import io.getquill.context.ZioJdbc._
 import zio.{Has, Task}
 

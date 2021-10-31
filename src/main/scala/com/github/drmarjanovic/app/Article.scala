@@ -1,4 +1,4 @@
-package com.github.drmarjanovic.app.domain
+package com.github.drmarjanovic.app
 
 import java.time.LocalDateTime
 

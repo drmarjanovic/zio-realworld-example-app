@@ -1,6 +1,5 @@
-package com.github.drmarjanovic.app.api.routes
+package com.github.drmarjanovic.app.api
 
-import com.github.drmarjanovic.app.api.model.AppInfo
 import zhttp.http._
 import zio.json._
 

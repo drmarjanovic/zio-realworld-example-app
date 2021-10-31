@@ -1,4 +1,4 @@
-package com.github.drmarjanovic.app.api.model
+package com.github.drmarjanovic.app.api
 
 import com.github.drmarjanovic.app.BuildInfo
 import zio.json._

@@ -1,7 +1,6 @@
-package com.github.drmarjanovic.app.api.routes
+package com.github.drmarjanovic.app.api
 
-import com.github.drmarjanovic.app.api.model.{ArticleResponse, ArticlesResponse, ErrorResponse}
-import com.github.drmarjanovic.app.domain.ArticlesRepo
+import com.github.drmarjanovic.app.ArticlesRepo
 import zhttp.http._
 import zio.Has
 import zio.json._

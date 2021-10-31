@@ -1,4 +1,4 @@
-package com.github.drmarjanovic.app.domain
+package com.github.drmarjanovic.app
 
 import com.github.drmarjanovic.app.pg.PostgresArticlesRepo
 import zio._

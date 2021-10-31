@@ -1,6 +1,6 @@
-package com.github.drmarjanovic.app.api.model
+package com.github.drmarjanovic.app.api
 
-import com.github.drmarjanovic.app.domain.{Article, ArticleId}
+import com.github.drmarjanovic.app.{Article, ArticleId}
 import zio.test.Assertion._
 import zio.test._
 
