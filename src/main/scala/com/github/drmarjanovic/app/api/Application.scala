@@ -5,7 +5,7 @@ import zio.json._
 
 object Application {
 
-  val routes: Http[Any, Nothing, Request, UResponse] =
+  final val Routes: Http[Any, Nothing, Request, UResponse] =
     Http.collect[Request] { case _ @Method.GET -> Root / "health" =>
       Response.jsonString(AppInfo.up.toJson)
     }

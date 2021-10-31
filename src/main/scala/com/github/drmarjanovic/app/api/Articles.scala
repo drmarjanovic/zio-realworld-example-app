@@ -6,13 +6,10 @@ import zio.Has
 import zio.json._
 
 object Articles {
-  val routes: Http[Has[ArticlesRepo], Throwable, Request, UResponse] =
+  final val Routes: Http[Has[ArticlesRepo], Throwable, Request, UResponse] =
     Http.collectM[Request] {
       case req @ Method.GET -> Root / "articles" =>
-        val limit  = getQueryParam(req, "limit").getOrElse(20)
-        val offset = getQueryParam(req, "offset").getOrElse(0)
-
-        ArticlesRepo(_.fetchAll(limit, offset))
+        ArticlesRepo(_.fetchAll(req.limit.getOrElse(20), req.offset.getOrElse(0)))
           .map(data => ArticlesResponse.fromDomain(data).toJson)
           .map(Response.jsonString)
 

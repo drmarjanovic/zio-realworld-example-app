@@ -16,7 +16,7 @@ object Main extends App {
 
   private[this] def runServer =
     ZIO.serviceWith[HttpConfig] { config =>
-      val routes = Application.routes +++ Articles.routes
+      val routes = Application.Routes +++ Articles.Routes
       Server
         .start(config.port, routes)
         .inject(
