@@ -1,6 +1,6 @@
-package com.github.drmarjanovic.app.api.model
+package realworld.api
 
-import com.github.drmarjanovic.app.domain.Article
+import realworld.Article
 import zio.json._
 
 import java.time.LocalDateTime

@@ -4,9 +4,7 @@ Global / onChangedBuildSource := ReloadOnSourceChanges
 
 inThisBuild(
   List(
-    name         := "zio-realworld-example-app",
-    description  := "Exemplary real world application built with Scala + ZIO.",
-    organization := "com.github.drmarjanovic",
+    description := "Exemplary real world application built with Scala + ZIO.",
     developers := List(
       Developer(
         "drmarjanovic",
@@ -31,8 +29,6 @@ inThisBuild(
   )
 )
 
-Global / onChangedBuildSource := ReloadOnSourceChanges
-
 addCommandAlias("prepare", "fix; fmt")
 addCommandAlias("check", "fixCheck; fmtCheck")
 addCommandAlias("fix", "scalafixAll")
@@ -42,7 +38,7 @@ addCommandAlias("fmtCheck", "all scalafmtSbtCheck scalafmtCheckAll")
 
 lazy val buildInfoSettings = List(
   buildInfoKeys    := List[BuildInfoKey](name, description, version),
-  buildInfoPackage := "com.github.drmarjanovic.app"
+  buildInfoPackage := "realworld"
 )
 
 lazy val root = (project in file("."))

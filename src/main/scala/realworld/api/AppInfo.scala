@@ -1,6 +1,6 @@
-package com.github.drmarjanovic.app.api.model
+package realworld.api
 
-import com.github.drmarjanovic.app.BuildInfo
+import realworld.BuildInfo
 import zio.json._
 
 final case class AppInfo(name: String, version: String, description: String, status: String)
