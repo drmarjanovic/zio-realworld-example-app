@@ -7,16 +7,16 @@ import zio.{Has, Task}
 import java.io.Closeable
 import javax.sql.DataSource
 
-final case class PgArticlesRepo(pool: DataSource with Closeable) extends ArticlesRepo {
+final case class PostgresArticlesRepo(pool: DataSource with Closeable) extends ArticlesRepo {
 
   import QuillContext._
 
   private val env = Has(pool)
 
-  override def all(limit: Int, offset: Int): Task[List[Article]] =
+  def fetchAll(limit: Int, offset: Int): Task[List[Article]] =
     run(articles.drop(lift(offset)).take(lift(limit))).onDS.provide(env)
 
-  override def findBySlug(slug: String): Task[Option[Article]] =
+  def findBySlug(slug: String): Task[Option[Article]] =
     run(articles.filter(_.slug == lift(slug))).map(_.headOption).onDS.provide(env)
 
 }

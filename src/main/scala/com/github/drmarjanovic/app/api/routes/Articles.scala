@@ -13,14 +13,14 @@ object Articles {
         val limit  = getQueryParam(req, "limit").getOrElse(20)
         val offset = getQueryParam(req, "offset").getOrElse(0)
 
-        ArticlesRepo(_.all(limit, offset))
+        ArticlesRepo(_.fetchAll(limit, offset))
           .map(data => ArticlesResponse.fromDomain(data).toJson)
           .map(Response.jsonString)
 
       case _ @Method.GET -> Root / "articles" / slug =>
         ArticlesRepo(_.findBySlug(slug)).map {
           case Some(article) => Response.jsonString(ArticleResponse.fromDomain(article).toJson)
-          case None          => unprocessableEntity(ErrorResponse.withReasons(s"Article $slug does not exist.").toJson)
+          case None          => unprocessableEntity(ErrorResponse.fromReasons(s"Article $slug does not exist.").toJson)
         }
     }
 }

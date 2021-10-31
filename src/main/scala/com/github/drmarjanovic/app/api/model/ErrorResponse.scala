@@ -6,6 +6,6 @@ final case class ErrorResponse(errors: ErrorResponseData) extends AnyVal
 object ErrorResponse {
   implicit val encoder: JsonEncoder[ErrorResponse] = DeriveJsonEncoder.gen[ErrorResponse]
 
-  def withReasons(reasons: String*): ErrorResponse =
+  def fromReasons(reasons: String*): ErrorResponse =
     new ErrorResponse(ErrorResponseData(reasons.toList))
 }
