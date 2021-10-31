@@ -48,5 +48,5 @@ lazy val root = (project in file("."))
   .settings(buildInfoSettings: _*)
   .settings(
     testFrameworks      := List(new TestFramework("zio.test.sbt.ZTestFramework")),
-    libraryDependencies := (Core ++ Zio)
+    libraryDependencies := All
   )

@@ -2,39 +2,32 @@ import sbt._
 
 object Dependencies {
 
-  private object ZioVersions {
-    val Config = "1.0.6"
-    val Http   = "1.0.0.0-RC17"
-    val Json   = "0.1.5"
-    val Magic  = "0.3.9"
-    val Test   = "1.0.12"
-  }
-
   private object Versions {
     val Flyway          = "8.0.2"
     val OrganizeImports = "0.5.0"
     val Postgres        = "42.2.24"
     val Quill           = "3.10.0"
     val Scaluzzi        = "0.1.20"
+    val ZioConfig       = "1.0.6"
+    val ZioHttp         = "1.0.0.0-RC17"
+    val ZioJson         = "0.1.5"
+    val ZioMagic        = "0.3.9"
+    val ZioTest         = "1.0.12"
   }
 
-  lazy val Zio =
+  lazy val All =
     List(
-      "dev.zio"              %% "zio-config"          % ZioVersions.Config,
-      "dev.zio"              %% "zio-config-magnolia" % ZioVersions.Config,
-      "dev.zio"              %% "zio-config-typesafe" % ZioVersions.Config,
-      "io.d11"               %% "zhttp"               % ZioVersions.Http,
-      "dev.zio"              %% "zio-json"            % ZioVersions.Json,
-      "io.github.kitlangton" %% "zio-magic"           % ZioVersions.Magic,
-      "dev.zio"              %% "zio-test"            % ZioVersions.Test % Test,
-      "dev.zio"              %% "zio-test-sbt"        % ZioVersions.Test % Test
-    )
-
-  lazy val Core =
-    List(
-      "org.flywaydb"   % "flyway-core"    % Versions.Flyway,
-      "org.postgresql" % "postgresql"     % Versions.Postgres,
-      "io.getquill"   %% "quill-jdbc-zio" % Versions.Quill
+      "dev.zio"              %% "zio-config"          % Versions.ZioConfig,
+      "dev.zio"              %% "zio-config-magnolia" % Versions.ZioConfig,
+      "dev.zio"              %% "zio-config-typesafe" % Versions.ZioConfig,
+      "dev.zio"              %% "zio-json"            % Versions.ZioJson,
+      "io.d11"               %% "zhttp"               % Versions.ZioHttp,
+      "io.getquill"          %% "quill-jdbc-zio"      % Versions.Quill,
+      "io.github.kitlangton" %% "zio-magic"           % Versions.ZioMagic,
+      "org.flywaydb"          % "flyway-core"         % Versions.Flyway,
+      "org.postgresql"        % "postgresql"          % Versions.Postgres,
+      "dev.zio"              %% "zio-test"            % Versions.ZioTest % Test,
+      "dev.zio"              %% "zio-test-sbt"        % Versions.ZioTest % Test
     )
 
   lazy val ScalaFix =
