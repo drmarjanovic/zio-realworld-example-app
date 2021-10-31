@@ -9,7 +9,7 @@ object Articles {
   final val Routes: Http[Has[ArticlesRepo], Throwable, Request, UResponse] =
     Http.collectM[Request] {
       case req @ Method.GET -> Root / "articles" =>
-        ArticlesRepo(_.fetchAll(req.limit.getOrElse(20), req.offset.getOrElse(0)))
+        ArticlesRepo(_.fetchAll(req.limit, req.offset))
           .map(data => ArticlesResponse.fromDomain(data).toJson)
           .map(Response.jsonString)
 

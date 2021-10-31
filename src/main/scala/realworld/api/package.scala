@@ -10,9 +10,9 @@ import java.time.LocalDateTime
 package object api {
 
   implicit final class RequestOps(private val req: Request) extends AnyVal {
-    def limit: Option[Int] = req.url.queryParams.get("limit").flatMap(_.headOption).flatMap(_.toIntOption)
+    def limit: Int = req.url.queryParams.get("limit").flatMap(_.headOption).flatMap(_.toIntOption).getOrElse(20)
 
-    def offset: Option[Int] = req.url.queryParams.get("offset").flatMap(_.headOption).flatMap(_.toIntOption)
+    def offset: Int = req.url.queryParams.get("offset").flatMap(_.headOption).flatMap(_.toIntOption).getOrElse(0)
   }
 
   implicit val dateTimeEncoder: JsonEncoder[LocalDateTime] = (dt: LocalDateTime, _: Option[Int], out: Write) =>
