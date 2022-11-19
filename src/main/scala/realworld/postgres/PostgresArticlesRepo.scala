@@ -28,4 +28,7 @@ final class PostgresArticlesRepo extends ArticlesRepo {
   def findBySlug(slug: String): Task[Option[Article]] =
     run(articles.filter(_.slug == lift(slug))).map(_.headOption).provide(env)
 
+  def deleteBySlug(slug: String): Task[Long] =
+    run(articles.filter(_.slug == lift(slug)).delete).map(_.self).provide(env)
+
 }

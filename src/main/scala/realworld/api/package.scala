@@ -15,12 +15,6 @@ package object api {
   }
 
   implicit val dateTimeEncoder: JsonEncoder[LocalDateTime] = (dt: LocalDateTime, _: Option[Int], out: Write) =>
-    out.write(s"\"$dt\"")
-
-//  def unprocessableEntity(data: String): UResponse = Response.json(
-//    Status.UNPROCESSABLE_ENTITY,
-//    content = HttpData.CompleteData(Chunk.fromArray(data.getBytes(HTTP_CHARSET))),
-//    headers = List(Header.contentTypeJson)
-//  )
+    out.write(s"\"${dt}Z\"")
 
 }
