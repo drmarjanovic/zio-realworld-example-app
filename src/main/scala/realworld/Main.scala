@@ -8,12 +8,20 @@ import zio.http.{Server, ServerConfig}
 
 object Main extends ZIOAppDefault {
 
-  private[this] def runServer =
+  private[this] def runServer = {
+    val serverConfigLive =
+      ZLayer.fromZIO {
+        for {
+          http <- ZIO.service[HttpConfig]
+        } yield ServerConfig.default.port(http.port)
+      }
+
     (for {
       _     <- ZIO.service[HttpConfig]
       routes = Articles.Routes
       _     <- Server.serve(routes)
-    } yield ()).provide(AppConfig.live, ArticlesRepo.live, Server.live, ServerConfig.live)
+    } yield ()).provide(AppConfig.live, ArticlesRepo.live, Server.live, serverConfigLive)
+  }
 
   override def run: ZIO[Any, Throwable, ExitCode] =
     (for {
