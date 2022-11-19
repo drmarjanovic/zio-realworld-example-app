@@ -1,19 +1,18 @@
 package realworld.config
 
-import zio.config.ReadError
-import zio.config.magnolia.DeriveConfigDescriptor
-import zio.config.syntax._
-import zio.config.typesafe.TypesafeConfig
-import zio.{Has, Layer}
+import zio.config.{ReadError, _}
+import zio.{IO, ZLayer}
+
+import magnolia._
+import typesafe._
 
 final case class AppConfig(http: HttpConfig, db: DatabaseConfig)
 
 object AppConfig {
-  private[this] final val Descriptor = DeriveConfigDescriptor.descriptor[AppConfig]
+  private val config: IO[ReadError[String], AppConfig] = read(
+    descriptorForPureConfig[AppConfig] from TypesafeConfigSource.fromResourcePath
+  )
 
-  lazy val live: Layer[ReadError[String], Has[AppConfig] with Has[HttpConfig] with Has[DatabaseConfig]] = {
-    val appConfig = TypesafeConfig.fromDefaultLoader(Descriptor)
+  val live: ZLayer[Any, ReadError[String], AppConfig] = ZLayer.fromZIO(config)
 
-    appConfig >+> appConfig.narrow(_.http) >+> appConfig.narrow(_.db)
-  }
 }

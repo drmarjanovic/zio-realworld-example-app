@@ -1,7 +1,6 @@
 package realworld
 
-import zhttp.http._
-import zio.Chunk
+import zio.http.Request
 import zio.json.JsonEncoder
 import zio.json.internal.Write
 
@@ -16,12 +15,12 @@ package object api {
   }
 
   implicit val dateTimeEncoder: JsonEncoder[LocalDateTime] = (dt: LocalDateTime, _: Option[Int], out: Write) =>
-    out.write(dt.toString)
+    out.write(s"\"$dt\"")
 
-  def unprocessableEntity(data: String): UResponse = Response.http(
-    Status.UNPROCESSABLE_ENTITY,
-    content = HttpData.CompleteData(Chunk.fromArray(data.getBytes(HTTP_CHARSET))),
-    headers = List(Header.contentTypeJson)
-  )
+//  def unprocessableEntity(data: String): UResponse = Response.json(
+//    Status.UNPROCESSABLE_ENTITY,
+//    content = HttpData.CompleteData(Chunk.fromArray(data.getBytes(HTTP_CHARSET))),
+//    headers = List(Header.contentTypeJson)
+//  )
 
 }

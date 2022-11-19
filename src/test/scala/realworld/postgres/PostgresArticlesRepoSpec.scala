@@ -1,31 +1,33 @@
 package realworld.postgres
 
+import realworld.api.ArticlesResponseSpec.genArticle
 import realworld.config.AppConfig
-import realworld.{ArticlesRepo, BaseSpec}
-import zio.magic._
+import realworld.{Article, ArticlesRepo}
+import zio.ZIO
 import zio.test.Assertion._
 import zio.test.TestAspect._
 import zio.test._
 
-object PostgresArticlesRepoSpec extends BaseSpec {
+object PostgresArticlesRepoSpec extends ZIOSpecDefault {
 
-  def spec: ZSpec[Environment, Failure] = suite("PostgresArticlesRepoSpec")(
-    testM("fetching all") {
-      checkM(Gen.listOf(genArticle), Gen.int(0, 100), Gen.int(0, 100)) { (articles, limit, offset) =>
+  def spec: Spec[Any, Throwable] = (suite("PostgresArticlesRepoSpec")(
+    test("fetching all") {
+      check(Gen.listOf(genArticle), Gen.int(0, 100), Gen.int(0, 100)) { (articles, limit, offset) =>
         for {
-          result <- ArticlesRepo(_.fetchAll(limit, offset)).inject(QuillContext.live, ArticlesRepo.live)
-        } yield assert(result)(equalTo(articles.slice(offset, offset + limit)))
+          repo   <- ZIO.service[ArticlesRepo]
+          result <- repo.fetchAll(limit, offset)
+        } yield assert(result)(hasSameElements(articles.slice(offset, offset + limit)))
       }
     } @@ ignore,
-    testM("finding by slug") {
-      checkM(genArticle) { article =>
+    test("finding by slug") {
+      check(genArticle) { article =>
         for {
-          saved <- ArticlesRepo(_.insert(article.title, article.body, article.description))
-                     .inject(QuillContext.live, ArticlesRepo.live)
-          result <- ArticlesRepo(_.findBySlug(saved.slug)).inject(QuillContext.live, ArticlesRepo.live)
-        } yield assert(result)(isSome(equalTo(saved)))
+          repo   <- ZIO.service[ArticlesRepo]
+          saved  <- repo.insert(article.title, article.body, article.description)
+          result <- repo.findBySlug(saved.slug)
+        } yield assert(result)(isSome[Article](equalTo(saved)))
       }
     }
-  ) @@ beforeAll(QuillContext.migrate.inject(AppConfig.live))
+  ) @@ beforeAll(QuillContext.migrate.provide(AppConfig.live))).provide(QuillContext.live, ArticlesRepo.live)
 
 }

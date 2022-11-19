@@ -1,28 +1,24 @@
 package realworld
 
-import realworld.api.{Application, Articles}
-import realworld.config.{AppConfig, HttpConfig}
+import realworld.api.Articles
+import realworld.config.AppConfig
 import realworld.postgres.QuillContext
-import zhttp.service.Server
 import zio._
-import zio.magic._
+import zio.http.{Server, ServerConfig}
 
-object Main extends App {
-
-  override def run(args: List[String]): URIO[ZEnv, ExitCode] =
-    (QuillContext.migrate *> runServer)
-      .inject(AppConfig.live)
-      .exitCode
+object Main extends ZIOAppDefault {
 
   private[this] def runServer =
-    ZIO.serviceWith[HttpConfig] { config =>
-      val routes = Application.Routes +++ Articles.Routes
-      Server
-        .start(config.port, routes)
-        .inject(
-          QuillContext.live,
-          ArticlesRepo.live
-        )
-    }
+    (for {
+      _     <- ZIO.service[AppConfig]
+      routes = Articles.Routes
+      _     <- Server.serve(routes)
+    } yield ()).provide(AppConfig.live, ArticlesRepo.live, Server.live, ServerConfig.live)
+
+  override def run: ZIO[Any, Throwable, ExitCode] =
+    (for {
+      _    <- QuillContext.migrate
+      code <- runServer.exitCode
+    } yield code).provide(AppConfig.live)
 
 }

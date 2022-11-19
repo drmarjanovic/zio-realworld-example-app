@@ -1,12 +1,13 @@
 package realworld.api
 
-import realworld.BaseSpec
-import zio.test.Assertion._
+import realworld.api.ArticlesResponseSpec.genArticle
+import zio.Scope
+import zio.test.Assertion.equalTo
 import zio.test._
 
-object ArticleResponseDataSpec extends BaseSpec {
-  def spec: ZSpec[Environment, Failure] = suite("ArticleResponseDataSpec")(
-    testM("fromDomain correctly transforms domain to response data") {
+object ArticleResponseDataSpec extends ZIOSpecDefault {
+  def spec: Spec[Environment with TestEnvironment with Scope, Any] = suite("ArticleResponseDataSpec")(
+    test("fromDomain correctly transforms domain to response data") {
       check(genArticle) { article =>
         val result = ArticleResponseData.fromDomain(article)
 

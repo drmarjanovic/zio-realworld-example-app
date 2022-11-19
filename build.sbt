@@ -19,7 +19,7 @@ inThisBuild(
         url("https://github.com/mijicd")
       )
     ),
-    scalaVersion      := "2.13.6",
+    scalaVersion      := "2.13.10",
     semanticdbEnabled := true,
     semanticdbVersion := scalafixSemanticdb.revision,
     scalafixDependencies ++= ScalaFix,

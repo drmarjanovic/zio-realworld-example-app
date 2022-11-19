@@ -1,24 +1,23 @@
 package realworld.postgres
 
-import io.getquill.context.ZioJdbc.QDataSource
+import io.getquill.jdbczio.Quill
 import io.getquill.{PluralizedTableNames, PostgresZioJdbcContext, SnakeCase}
 import org.flywaydb.core.Flyway
-import realworld.config.DatabaseConfig
-import zio.{Has, RIO, Task, TaskLayer, UIO, ZIO}
+import realworld.config.AppConfig
+import zio.{RIO, ZIO, ZLayer}
 
-import java.io.Closeable
 import javax.sql.DataSource
 
 object QuillContext extends PostgresZioJdbcContext(new SnakeCase with PluralizedTableNames) {
 
-  lazy val live: TaskLayer[Has[DataSource with Closeable]] = QDataSource.fromPrefix("postgres")
+  def migrate: RIO[AppConfig, Unit] =
+    for {
+      conf   <- ZIO.service[AppConfig]
+      db      = conf.db
+      flyway <- ZIO.attempt(Flyway.configure().dataSource(db.url, db.user, db.password).load())
+      _      <- ZIO.attempt(flyway.migrate())
+    } yield ()
 
-  def migrate: RIO[Has[DatabaseConfig], Any] =
-    ZIO.serviceWith[DatabaseConfig] { config =>
-      for {
-        flyway <- UIO(Flyway.configure().dataSource(config.url, config.user, config.password).load())
-        _      <- Task(flyway.migrate())
-      } yield ()
-    }
+  lazy val live: ZLayer[Any, Throwable, DataSource] = Quill.DataSource.fromPrefix("postgres")
 
 }

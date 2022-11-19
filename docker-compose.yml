@@ -1,12 +1,21 @@
 version: "3.9"
 services:
   postgresql:
-    container_name: zio_realworld_example_app
-    image: postgres:13.4-alpine
+    container_name: realworld-db
+    image: postgres:15.1-alpine
     environment:
       POSTGRES_DB: db
       POSTGES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
       - "5432:5432"
-    restart: always
+
+  postgresql-test:
+    container_name: realworld-test-db
+    image: postgres:15.1-alpine
+    environment:
+      POSTGRES_DB: test-db
+      POSTGES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
