@@ -28,6 +28,6 @@ object PostgresArticlesRepoSpec extends ZIOSpecDefault {
         } yield assert(result)(isSome[Article](equalTo(saved)))
       }
     }
-  ) @@ beforeAll(QuillContext.migrate.provide(AppConfig.live))).provide(QuillContext.live, ArticlesRepo.live)
+  ) @@ beforeAll(QuillContext.migrate.provide(AppConfig.live))).provide(ArticlesRepo.live)
 
 }

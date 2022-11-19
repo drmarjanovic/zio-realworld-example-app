@@ -1,7 +1,7 @@
 package realworld
 
 import realworld.api.Articles
-import realworld.config.AppConfig
+import realworld.config.{AppConfig, HttpConfig}
 import realworld.postgres.QuillContext
 import zio._
 import zio.http.{Server, ServerConfig}
@@ -10,7 +10,7 @@ object Main extends ZIOAppDefault {
 
   private[this] def runServer =
     (for {
-      _     <- ZIO.service[AppConfig]
+      _     <- ZIO.service[HttpConfig]
       routes = Articles.Routes
       _     <- Server.serve(routes)
     } yield ()).provide(AppConfig.live, ArticlesRepo.live, Server.live, ServerConfig.live)
