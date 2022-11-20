@@ -1,14 +1,24 @@
 package realworld.postgres
 
+import io.getquill.Query
+import io.getquill.mirrorContextWithQueryProbing.quote
 import realworld.api.ArticlesResponseSpec.genArticle
 import realworld.config.AppConfig
+import realworld.postgres.QuillContext.SqlInfixInterpolator
 import realworld.{Article, ArticlesRepo}
 import zio.ZIO
 import zio.test.Assertion._
 import zio.test.TestAspect._
 import zio.test._
-
 object PostgresArticlesRepoSpec extends ZIOSpecDefault {
+
+//  val a: Quoted[(String, String, String, String) => Query[Int]] = quote {
+//    (title: String, slug: String, body: String, description: String) =>
+//      sql"""INSERT INTO articles(title, slug, body, description) VALUES ($title, $slug, $body, $description) RETURNING id;"""
+//        .as[Query[Int]]
+//  }
+
+//  ctx.run(a)
 
   def spec: Spec[Any, Throwable] = (suite("PostgresArticlesRepoSpec")(
     test("fetching all") {
@@ -28,6 +38,8 @@ object PostgresArticlesRepoSpec extends ZIOSpecDefault {
         } yield assert(result)(isSome[Article](equalTo(saved)))
       }
     }
+//    test("inserting") {},
+//    test("deleting by slug") {}
   ) @@ beforeAll(QuillContext.migrate.provide(AppConfig.live))).provide(ArticlesRepo.live)
 
 }

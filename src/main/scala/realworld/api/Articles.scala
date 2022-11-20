@@ -26,6 +26,15 @@ object Articles {
                  )
         } yield Response.json(data)
 
+      case req @ Method.POST -> !! / "api" / "articles" =>
+        for {
+          repo    <- ZIO.service[ArticlesRepo]
+          spec    <- req.body.asString.map(_.fromJson[CreateArticleRequest])
+          article  = spec.right.get.article
+          created <- repo.insert(article.title, article.body, article.description)
+          response = ArticleResponse.fromDomain(created).toJson
+        } yield Response.json(response)
+
       case Method.DELETE -> !! / "api" / "articles" / slug =>
         for {
           repo <- ZIO.service[ArticlesRepo]

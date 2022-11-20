@@ -6,7 +6,7 @@ import zio.test.Assertion.equalTo
 import zio.test._
 
 object ArticleResponseDataSpec extends ZIOSpecDefault {
-  def spec: Spec[Environment with TestEnvironment with Scope, Any] = suite("ArticleResponseDataSpec")(
+  def spec = suite("ArticleResponseDataSpec")(
     test("fromDomain correctly transforms domain to response data") {
       check(genArticle) { article =>
         val result = ArticleResponseData.fromDomain(article)
