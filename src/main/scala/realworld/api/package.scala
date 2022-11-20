@@ -1,10 +1,12 @@
 package realworld
 
-import zio.http.{!!, Path, Request}
-import zio.json.JsonEncoder
+import zio.http.model.{HeaderNames, HeaderValues, Headers, Status}
+import zio.http.{!!, Body, Path, Request, Response}
 import zio.json.internal.Write
+import zio.json.{EncoderOps, JsonEncoder}
 
-import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.{LocalDateTime, ZoneOffset, ZonedDateTime}
 
 package object api {
 
@@ -16,7 +18,14 @@ package object api {
     def offset: Int = req.url.queryParams.get("offset").flatMap(_.headOption).flatMap(_.toIntOption).getOrElse(0)
   }
 
+  def unexpectedErrorFrom(reasons: String*): Response =
+    Response(
+      status = Status.UnprocessableEntity,
+      headers = Headers(HeaderNames.contentType, HeaderValues.applicationJson),
+      body = Body.fromCharSequence(ErrorResponse.fromReasons(reasons: _*).toJson)
+    )
+
   implicit val dateTimeEncoder: JsonEncoder[LocalDateTime] = (dt: LocalDateTime, _: Option[Int], out: Write) =>
-    out.write(s"\"${dt}Z\"")
+    out.write(s"\"${ZonedDateTime.of(dt, ZoneOffset.UTC).format(DateTimeFormatter.ISO_INSTANT)}\"")
 
 }
