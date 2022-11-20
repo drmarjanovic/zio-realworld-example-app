@@ -4,8 +4,7 @@ import zio.{Task, ULayer, ZIO, ZLayer}
 import java.time.LocalDateTime
 import scala.collection.mutable
 
-final class InMemArticlesRepo private (init: mutable.Seq[Article] = mutable.Seq.empty[Article])
-    extends ArticlesRepo {
+final class InMemArticlesRepo private (init: mutable.Seq[Article] = mutable.Seq.empty[Article]) extends ArticlesRepo {
 
   private var articles = init
 

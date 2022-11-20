@@ -23,7 +23,7 @@ final class PostgresArticlesRepo extends ArticlesRepo {
     ).provide(env)
 
   def fetchAll(limit: Int, offset: Int): Task[List[Article]] =
-    run(articles.drop(lift(offset)).take(lift(limit))).provide(env)
+    run(articles.sortBy(_.id).drop(lift(offset)).take(lift(limit))).provide(env)
 
   def findBySlug(slug: String): Task[Option[Article]] =
     run(articles.filter(_.slug == lift(slug))).map(_.headOption).provide(env)
