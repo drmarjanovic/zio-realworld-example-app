@@ -1,13 +1,13 @@
 package realworld.api
 
-import zio.test.ZIOSpecDefault
+import zio.Scope
 import zio.json._
 import zio.test.Assertion.{equalTo, isLeft, isRight}
 import zio.test._
 
 object CreateArticleRequestSpec extends ZIOSpecDefault {
 
-  def spec = suite("CreateArticleRequestSpec")(
+  def spec: Spec[Environment with TestEnvironment with Scope, Any] = suite("CreateArticleRequestSpec")(
     test("successfully transforms JSON to CreateArticleRequest") {
       val json =
         """

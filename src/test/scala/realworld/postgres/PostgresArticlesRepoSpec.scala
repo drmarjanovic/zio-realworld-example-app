@@ -1,10 +1,7 @@
 package realworld.postgres
 
-import io.getquill.Query
-import io.getquill.mirrorContextWithQueryProbing.quote
 import realworld.api.ArticlesResponseSpec.genArticle
 import realworld.config.AppConfig
-import realworld.postgres.QuillContext.SqlInfixInterpolator
 import realworld.{Article, ArticlesRepo}
 import zio.ZIO
 import zio.test.Assertion._
