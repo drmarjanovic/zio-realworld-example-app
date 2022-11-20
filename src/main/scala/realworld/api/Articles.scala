@@ -10,14 +10,14 @@ object Articles {
 
   final val Routes: Http[ArticlesRepo, Throwable, Request, Response] =
     Http.collectZIO[Request] {
-      case req @ Method.GET -> !! / "api" / "articles" =>
+      case req @ Method.GET -> BasePath / "articles" =>
         for {
           repo     <- ZIO.service[ArticlesRepo]
           articles <- repo.fetchAll(req.limit, req.offset)
           data      = ArticlesResponse.fromDomain(articles).toJson
         } yield Response.json(data)
 
-      case Method.GET -> !! / "api" / "articles" / slug =>
+      case Method.GET -> BasePath / "articles" / slug =>
         for {
           repo    <- ZIO.service[ArticlesRepo]
           article <- repo.findBySlug(slug)
@@ -26,7 +26,7 @@ object Articles {
                  )
         } yield Response.json(data)
 
-      case req @ Method.POST -> !! / "api" / "articles" =>
+      case req @ Method.POST -> BasePath / "articles" =>
         for {
           repo    <- ZIO.service[ArticlesRepo]
           spec    <- req.body.asString.map(_.fromJson[CreateArticleRequest])
@@ -35,7 +35,7 @@ object Articles {
           response = ArticleResponse.fromDomain(created).toJson
         } yield Response.json(response)
 
-      case Method.DELETE -> !! / "api" / "articles" / slug =>
+      case Method.DELETE -> BasePath / "articles" / slug =>
         for {
           repo <- ZIO.service[ArticlesRepo]
           _    <- repo.deleteBySlug(slug)

@@ -1,12 +1,14 @@
 package realworld
 
-import zio.http.Request
+import zio.http.{!!, Path, Request}
 import zio.json.JsonEncoder
 import zio.json.internal.Write
 
 import java.time.LocalDateTime
 
 package object api {
+
+  val BasePath: Path = !! / "api"
 
   implicit final class RequestOps(private val req: Request) extends AnyVal {
     def limit: Int = req.url.queryParams.get("limit").flatMap(_.headOption).flatMap(_.toIntOption).getOrElse(20)

@@ -23,10 +23,8 @@ object Main extends ZIOAppDefault {
     } yield ()).provide(AppConfig.live, ArticlesRepo.live, Server.live, serverConfigLive)
   }
 
-  override def run: ZIO[Any, Throwable, ExitCode] =
-    (for {
-      _    <- QuillContext.migrate
-      code <- runServer.exitCode
-    } yield code).provide(AppConfig.live)
+  override def run: Task[Unit] =
+    (QuillContext.migrate *> runServer)
+      .provide(AppConfig.live)
 
 }
