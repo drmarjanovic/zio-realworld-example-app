@@ -21,10 +21,10 @@ object Articles {
         for {
           repo    <- ZIO.service[ArticlesRepo]
           article <- repo.findBySlug(slug)
-          data = article.fold(ErrorResponse.fromReasons(s"Article $slug does not exist.").toJson)(
-                   ArticleResponse.fromDomain(_).toJson
-                 )
-        } yield Response.json(data)
+        } yield article match {
+          case Some(a) => Response.json(ArticleResponse.fromDomain(a).toJson)
+          case None    => unexpectedErrorFrom(s"Article $slug does not exist.")
+        }
 
       case req @ Method.POST -> BasePath / "articles" =>
         for {

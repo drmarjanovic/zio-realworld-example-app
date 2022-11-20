@@ -20,7 +20,7 @@ object ArticlesSpec extends ZIOSpecDefault {
       ),
       test("return a proper error response when article by slug does not exist")(
         assertZIO(Articles.Routes(Request.get(URL(BasePath / "articles" / "non-existing"))).map(_.toString))(
-          equalTo(Response.json(ErrorResponse.fromReasons("Article non-existing does not exist.").toJson).toString)
+          equalTo(unexpectedErrorFrom("Article non-existing does not exist.").toString)
         )
       )
     ).provide(InMemArticlesRepo.live)
