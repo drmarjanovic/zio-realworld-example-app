@@ -1,6 +1,6 @@
 package realworld
 
-import realworld.api.Articles
+import realworld.api.{Application, Articles}
 import realworld.config.{AppConfig, HttpConfig}
 import realworld.postgres.QuillContext
 import zio._
@@ -8,7 +8,7 @@ import zio.http.{Server, ServerConfig}
 
 object Main extends ZIOAppDefault {
 
-  private[this] def runServer = {
+  private[this] def runServer: Task[Unit] = {
     val serverConfigLive =
       ZLayer.fromZIO {
         for {
@@ -18,7 +18,7 @@ object Main extends ZIOAppDefault {
 
     (for {
       _     <- ZIO.service[HttpConfig]
-      routes = Articles.Routes
+      routes = Application.Routes ++ Articles.Routes
       _     <- Server.serve(routes)
     } yield ()).provide(AppConfig.live, ArticlesRepo.live, Server.live, serverConfigLive)
   }

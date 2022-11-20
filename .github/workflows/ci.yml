@@ -30,7 +30,7 @@ jobs:
         java: ['adopt@1.8', 'adopt@1.11']
     services:
       postgres:
-        image: postgres:13.4-alpine
+        image: postgres:15.1-alpine
         env:
           POSTGRES_DB: test-db
           POSTGES_USER: postgres
@@ -53,11 +53,6 @@ jobs:
         uses: coursier/cache-action@v6
       - name: Run tests
         env:
-          DB_HOST: 127.0.0.1
-          DB_PORT: 5432
-          DB_NAME: db
-          DB_USER: postgres
-          DB_PASSWORD: postgres
           TEST_DB_HOST: 127.0.0.1
           TEST_DB_PORT: 5432
           TEST_DB_NAME: test-db
