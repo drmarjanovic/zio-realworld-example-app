@@ -6,6 +6,7 @@ object Dependencies {
     val Flyway          = "9.8.1"
     val OrganizeImports = "0.6.0"
     val Scaluzzi        = "0.1.23"
+    val Slf4j           = "2.0.4"
     val Postgres        = "42.5.0"
     val Zio             = "2.0.3"
     val ZioConfig       = "3.0.2"
@@ -25,8 +26,9 @@ object Dependencies {
       "dev.zio"       %% "zio-json"            % Versions.ZioJson,
       "dev.zio"       %% "zio-http"            % Versions.ZioHttp,
       "io.getquill"   %% "quill-jdbc-zio"      % Versions.ZioQuill,
-      "dev.zio"       %% "zio-test"            % Versions.Zio % Test,
-      "dev.zio"       %% "zio-test-sbt"        % Versions.Zio % Test
+      "org.slf4j"      % "slf4j-simple"        % Versions.Slf4j % Test,
+      "dev.zio"       %% "zio-test"            % Versions.Zio   % Test,
+      "dev.zio"       %% "zio-test-sbt"        % Versions.Zio   % Test
     )
 
   lazy val ScalaFix: List[ModuleID] =
