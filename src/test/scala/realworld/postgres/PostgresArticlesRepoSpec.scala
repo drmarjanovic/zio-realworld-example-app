@@ -57,12 +57,19 @@ object PostgresArticlesRepoSpec extends ZIOSpecDefault {
     QuillContext.run(sql).unit.provide(QuillContext.live)
   }
 
-  private def insert(title: String, slug: String, body: String, description: String): Task[Long] = {
-    val sql = articles
-      .insert(_.title -> lift(title), _.slug -> lift(slug), _.body -> lift(body), _.description -> lift(description))
-      .returning(_.id)
-
-    QuillContext.run(sql).map(_.id).provide(QuillContext.live)
-  }
+  private def insert(title: String, slug: String, body: String, description: String): Task[Long] =
+    QuillContext
+      .run(
+        articles
+          .insert(
+            _.title       -> lift(title),
+            _.slug        -> lift(slug),
+            _.body        -> lift(body),
+            _.description -> lift(description)
+          )
+          .returning(_.id)
+      )
+      .map(_.id)
+      .provide(QuillContext.live)
 
 }
