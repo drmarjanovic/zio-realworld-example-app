@@ -1,17 +1,13 @@
 package realworld.postgres
 
-import io.getquill.Delete
-import realworld.api.ArticlesResponseSpec.genArticle
-import realworld.config.AppConfig
-import realworld.postgres.QuillContext.quote
 import realworld.{ArticleId, ArticlesRepo}
 import zio.test.Assertion._
-import zio.test.TestAspect._
+import zio.test.TestAspect.sequential
 import zio.test._
 import zio.{Task, ZIO}
 
 import QuillContext._
-object PostgresArticlesRepoSpec extends ZIOSpecDefault {
+object PostgresArticlesRepoSpec extends DatabaseSpec {
 
   def spec: Spec[Any, Throwable] =
     (suite("PostgresArticlesRepoSpec")(
@@ -46,16 +42,7 @@ object PostgresArticlesRepoSpec extends ZIOSpecDefault {
         val slug = "non-existing-test-slug"
         assertZIO(ArticlesRepo.findBySlug(slug))(isNone)
       }
-    ) @@ before(cleanTable) @@ beforeAll(QuillContext.migrate.provide(AppConfig.live)))
-      .provide(PostgresArticlesRepo.live) @@ sequential
-
-  private def cleanTable: Task[Unit] = {
-    val sql = quote {
-      sql"""DELETE FROM articles;""".as[Delete[Unit]]
-    }
-
-    QuillContext.run(sql).unit.provide(QuillContext.live)
-  }
+    ) @@ setupDatabase @@ sequential).provideShared(PostgresArticlesRepo.live)
 
   private def insert(title: String, slug: String, body: String, description: String): Task[Long] =
     QuillContext
