@@ -1,11 +1,11 @@
 package realworld.api
 
 import realworld.{ArticlesRepo, InMemArticlesRepo}
+import zio.Scope
 import zio.http.{Request, Response, URL}
 import zio.json.EncoderOps
 import zio.test.Assertion._
-import zio.test.{ZIOSpecDefault, _}
-import zio.{Scope, ZIO}
+import zio.test._
 
 object ArticlesSpec extends ZIOSpecDefault {
 
@@ -13,9 +13,8 @@ object ArticlesSpec extends ZIOSpecDefault {
     suite("ArticlesSpec")(
       test("successfully fetch article by slug")(
         for {
-          articles <- ZIO.service[ArticlesRepo]
-          article  <- articles.insert("test-title", "test-body", "test-description")
-          res      <- Articles.Routes(Request.get(URL(BasePath / "articles" / "test-title")))
+          article <- ArticlesRepo.insert("test-title", "test-body", "test-description")
+          res     <- Articles.Routes(Request.get(URL(BasePath / "articles" / "test-title")))
         } yield assert(res.toString)(equalTo(Response.json(ArticleResponse.fromDomain(article).toJson).toString))
       ),
       test("return a proper error response when article by slug does not exist")(

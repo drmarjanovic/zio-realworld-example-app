@@ -1,7 +1,7 @@
 package realworld.postgres
 
 import realworld.{Article, ArticlesRepo}
-import zio.Task
+import zio.{Task, ULayer, ZLayer}
 
 import java.util.UUID
 
@@ -31,4 +31,8 @@ final class PostgresArticlesRepo extends ArticlesRepo {
   def deleteBySlug(slug: String): Task[Long] =
     run(articles.filter(_.slug == lift(slug)).delete).map(_.self).provide(env)
 
+}
+
+object PostgresArticlesRepo {
+  lazy val live: ULayer[PostgresArticlesRepo] = ZLayer.succeed(new PostgresArticlesRepo())
 }

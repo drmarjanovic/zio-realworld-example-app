@@ -1,6 +1,5 @@
 package realworld
 
-import realworld.postgres.PostgresArticlesRepo
 import zio._
 
 trait ArticlesRepo {
@@ -14,5 +13,15 @@ trait ArticlesRepo {
 }
 
 object ArticlesRepo {
-  lazy val live: ULayer[PostgresArticlesRepo] = ZLayer.succeed(new PostgresArticlesRepo())
+  def insert(title: String, body: String, description: String): RIO[ArticlesRepo, Article] =
+    ZIO.serviceWithZIO(_.insert(title, body, description))
+
+  def fetchAll(limit: Int, offset: Int): RIO[ArticlesRepo, List[Article]] =
+    ZIO.serviceWithZIO(_.fetchAll(limit, offset))
+
+  def findBySlug(slug: String): RIO[ArticlesRepo, Option[Article]] =
+    ZIO.serviceWithZIO(_.findBySlug(slug))
+
+  def deleteBySlug(slug: String): RIO[ArticlesRepo, Long] =
+    ZIO.serviceWithZIO(_.deleteBySlug(slug))
 }
