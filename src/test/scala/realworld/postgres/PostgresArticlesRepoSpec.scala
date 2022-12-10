@@ -4,7 +4,7 @@ import io.getquill.Delete
 import realworld.api.ArticlesResponseSpec.genArticle
 import realworld.config.AppConfig
 import realworld.postgres.QuillContext.quote
-import realworld.{Article, ArticleId, ArticlesRepo}
+import realworld.{ArticleId, ArticlesRepo}
 import zio.test.Assertion._
 import zio.test.TestAspect._
 import zio.test._
@@ -58,11 +58,9 @@ object PostgresArticlesRepoSpec extends ZIOSpecDefault {
   }
 
   private def insert(title: String, slug: String, body: String, description: String): Task[Long] = {
-    val sql = quote {
-      query[Article]
-        .insert(_.title -> lift(title), _.slug -> lift(slug), _.body -> lift(body), _.description -> lift(description))
-        .returning(_.id)
-    }
+    val sql = articles
+      .insert(_.title -> lift(title), _.slug -> lift(slug), _.body -> lift(body), _.description -> lift(description))
+      .returning(_.id)
 
     QuillContext.run(sql).map(_.id).provide(QuillContext.live)
   }

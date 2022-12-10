@@ -3,12 +3,12 @@ import sbt._
 object Dependencies {
 
   private object Versions {
-    val Flyway          = "9.8.1"
+    val Flyway          = "9.8.3"
     val OrganizeImports = "0.6.0"
     val Scaluzzi        = "0.1.23"
-    val Slf4j           = "2.0.4"
-    val Postgres        = "42.5.0"
-    val Zio             = "2.0.3"
+    val Slf4j           = "2.0.5"
+    val Postgres        = "42.5.1"
+    val Zio             = "2.0.4"
     val ZioConfig       = "3.0.2"
     val ZioHttp         = "0.0.3"
     val ZioJson         = "0.3.0"

@@ -8,7 +8,7 @@ final class InMemArticlesRepo private (init: mutable.Seq[Article] = mutable.Seq.
 
   private var articles = init
 
-  override def insert(title: String, body: String, description: String): Task[Article] =
+  def insert(title: String, body: String, description: String): Task[Article] =
     ZIO.succeed {
       val article = Article(
         id = ArticleId(1),
@@ -24,13 +24,13 @@ final class InMemArticlesRepo private (init: mutable.Seq[Article] = mutable.Seq.
       article
     }
 
-  override def fetchAll(limit: Int, offset: Int): Task[List[Article]] =
+  def fetchAll(limit: Int, offset: Int): Task[List[Article]] =
     ZIO.succeed(articles.slice(offset, offset + limit).toList)
 
-  override def findBySlug(slug: String): Task[Option[Article]] =
+  def findBySlug(slug: String): Task[Option[Article]] =
     ZIO.succeed(articles.find(_.slug == slug))
 
-  override def deleteBySlug(slug: String): Task[Long] =
+  def deleteBySlug(slug: String): Task[Long] =
     ZIO.succeed {
       val exists = articles.find(_.slug == slug)
       articles = articles.filterNot(_.slug == slug)
