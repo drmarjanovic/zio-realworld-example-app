@@ -28,6 +28,20 @@ jobs:
       fail-fast: false
       matrix:
         java: ['adopt@1.8', 'adopt@1.11']
+    services:
+      postgres:
+        image: postgres:15.1-alpine
+        env:
+          POSTGRES_DB: test-db
+          POSTGES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
     steps:
       - name: Checkout current branch
         uses: actions/checkout@v2.3.5
@@ -38,6 +52,17 @@ jobs:
       - name: Cache Scala dependencies
         uses: coursier/cache-action@v6
       - name: Run tests
+        env:
+          DB_HOST: 127.0.0.1
+          DB_PORT: 5432
+          DB_NAME: db
+          DB_USER: postgres
+          DB_PASSWORD: postgres
+          TEST_DB_HOST: 127.0.0.1
+          TEST_DB_PORT: 5432
+          TEST_DB_NAME: test-db
+          TEST_DB_USER: postgres
+          TEST_DB_PASSWORD: postgres
         run: ./sbt test
 
   ci:
